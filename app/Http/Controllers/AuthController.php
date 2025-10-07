@@ -27,7 +27,22 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        dd($request->all());
+        //dd($request->all());
+
+        $request->validate([
+        'username' => 'required',
+        'password' => ['required', 'min:3', 'regex:/[A-Z]/'], // wajib ada huruf kapital
+        ], [
+        'username.required' => 'Username wajib diisi',
+        'password.required' => 'Password wajib diisi',
+        'password.min' => 'Password minimal 3 karakter',
+        'password.regex' => 'Password harus mengandung huruf kapital',
+        ]);
+
+        $data['username'] = $request->username;
+        $data['password'] = $request->password;
+
+        return view('auth.login-respon', $data);
     }
 
     /**

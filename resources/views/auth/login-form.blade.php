@@ -9,7 +9,7 @@
 <div class="container mt-5">
     <div class="card">
     <div class="card-body">
-        <h5 class="card-title">Form Pertanyaan</h5>
+        <h5 class="card-title">Form Login</h5>
         <form action="{{ route('auth.login') }}" method="POST">
 	     @csrf
 

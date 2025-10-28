@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Proyek extends Model
 {
-     // Nama tabel
-    protected $table = 'proyek';
+    use HasFactory;
 
-    // Primary key
+    protected $table = 'proyek';
+    
     protected $primaryKey = 'proyek_id';
 
-    // Kolom yang boleh diisi (fillable)
     protected $fillable = [
         'kode_proyek',
         'nama_proyek',
@@ -21,5 +21,6 @@ class Proyek extends Model
         'anggaran',
         'sumber_dana',
         'deskripsi',
+        'media',
     ];
 }

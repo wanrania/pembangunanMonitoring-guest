@@ -86,57 +86,69 @@
     </header>
 
     <main class="container mt-5">
-        <h3>Tambah Data Proyek</h3>
-        <form action="{{ route('proyek.store') }}" method="POST">
-            @csrf
-            <div class="row mb-3">
-                <div class="col">
-                    <label>Kode Proyek</label>
-                    <input type="text" name="kode_proyek" class="form-control" required>
-                </div>
-                <div class="col">
-                    <label>Nama Proyek</label>
-                    <input type="text" name="nama_proyek" class="form-control" required>
-                </div>
-            </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3>Daftar Proyek</h3>
+            <a href="{{ route('proyek.create') }}" class="btn btn-primary">+ Tambah Proyek</a>
+        </div>
 
-            <div class="row mb-3">
-                <div class="col">
-                    <label>Tahun</label>
-                    <input type="date" name="tahun" class="form-control">
-                </div>
-                <div class="col">
-                    <label>Lokasi</label>
-                    <input type="text" name="lokasi" class="form-control" required>
-                </div>
-            </div>
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @elseif(session('update'))
+            <div class="alert alert-warning">{{ session('update') }}</div>
+        @elseif(session('delete'))
+            <div class="alert alert-danger">{{ session('delete') }}</div>
+        @endif
 
-            <div class="row mb-3">
-                <div class="col">
-                    <label>Anggaran</label>
-                    <input type="text" name="anggaran" class="form-control" required>
-                </div>
-                <div class="col">
-                    <label>Sumber Dana</label>
-                    <input type="text" name="sumber_dana" class="form-control">
-                </div>
-            </div>
+        <table class="table table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>No</th>
+                    <th>Kode Proyek</th>
+                    <th>Nama Proyek</th>
+                    <th>Tahun</th>
+                    <th>Lokasi</th>
+                    <th>Anggaran</th>
+                    <th>Sumber Dana</th>
+                    <th>Deskripsi</th>
+                    <th>Media</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @forelse ($dataProyek as $proyek)
+                    <tr>
+                        <td>{{ $loop->iteration }}</td>
+                        <td>{{ $proyek->kode_proyek }}</td>
+                        <td>{{ $proyek->nama_proyek }}</td>
+                        <td>{{ $proyek->tahun }}</td>
+                        <td>{{ $proyek->lokasi }}</td>
+                        <td>{{ $proyek->anggaran }}</td>
+                        <td>{{ $proyek->sumber_dana }}</td>
+                        <td>{{ $proyek->deskripsi }}</td>
+                        <td>{{ $proyek->media }}</td>
+                        <td>
+                            <a href="{{ route('proyek.edit', ['proyek' => $proyek->proyek_id]) }}"
+                                class="btn btn-sm btn-warning">
+                                Edit
+                            </a>
 
-            <div class="mb-3">
-                <label>Deskripsi</label>
-                <textarea name="deskripsi" class="form-control" rows="3"></textarea>
-            </div>
+                            <form action="{{ route('proyek.destroy', ['proyek' => $proyek->proyek_id]) }}" method="POST"
+                                style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
+                            </form>
+                        </td>
+                    </tr>
+                @empty
+                    <tr>
+                        <td colspan="10" class="text-center">Belum ada data proyek.</td>
+                    </tr>
+                @endforelse
 
-            <div class="mb-3">
-                <label>Media</label>
-                <input type="text" name="media" class="form-control">
-            </div>
-
-            <div class="d-flex justify-content-end">
-                <a href="{{ route('proyek.index') }}" class="btn btn-secondary me-2">Kembali</a>
-                <button type="submit" class="btn btn-success">Simpan</button>
-            </div>
-        </form>
+            </tbody>
+        </table>
     </main>
 
     <footer id="footer" class="footer light-background">

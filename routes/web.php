@@ -17,7 +17,8 @@ Route::post('/auth/login', [AuthController::class, 'login'])->name('auth.login')
 
 Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+
+// routes proyek bina desa
 Route::resource('proyek', ProyekController::class);
 
-Route::get('/proyek/create', [ProyekController::class, 'create'])->name('proyek.create');
-Route::post('/proyek', [ProyekController::class, 'store'])->name('proyek.store');
+

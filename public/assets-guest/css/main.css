@@ -2039,12 +2039,8 @@ section,
 }
 
 /*--------------------------------------------------------------
-# Starter Section Section
+# Custom Card Styles
 --------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
-}
-
 .card-custom {
     background: linear-gradient(145deg, #f0f4ff, #ffffff);
     border-radius: 15px;

@@ -2044,3 +2044,31 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+.card-custom {
+    background: linear-gradient(145deg, #f0f4ff, #ffffff);
+    border-radius: 15px;
+    border: 1px solid #dee2e6;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+.card-custom:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+.card-custom .card-title {
+    color: #0d6efd;
+    font-weight: 700;
+}
+.card-custom strong {
+    color: #333;
+}
+.card-custom .btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #000;
+}
+.card-custom .btn-danger {
+    background-color: #dc3545;
+    border: none;
+}

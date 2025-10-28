@@ -99,57 +99,58 @@
             <div class="alert alert-danger">{{ session('delete') }}</div>
         @endif
 
-        <table class="table table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>No</th>
-                    <th>Kode Proyek</th>
-                    <th>Nama Proyek</th>
-                    <th>Tahun</th>
-                    <th>Lokasi</th>
-                    <th>Anggaran</th>
-                    <th>Sumber Dana</th>
-                    <th>Deskripsi</th>
-                    <th>Media</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($dataProyek as $proyek)
-                    <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $proyek->kode_proyek }}</td>
-                        <td>{{ $proyek->nama_proyek }}</td>
-                        <td>{{ $proyek->tahun }}</td>
-                        <td>{{ $proyek->lokasi }}</td>
-                        <td>{{ $proyek->anggaran }}</td>
-                        <td>{{ $proyek->sumber_dana }}</td>
-                        <td>{{ $proyek->deskripsi }}</td>
-                        <td>{{ $proyek->media }}</td>
-                        <td>
-                            <a href="{{ route('proyek.edit', ['proyek' => $proyek->proyek_id]) }}"
-                                class="btn btn-sm btn-warning">
-                                Edit
-                            </a>
+        @if ($dataProyek->isEmpty())
+            <div class="text-center text-muted my-5">
+                <h5>Belum ada data proyek.</h5>
+            </div>
+        @else
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                @foreach ($dataProyek as $proyek)
+                    <div class="col">
+                        <div class="card card-custom h-100 overflow-hidden">
 
-                            <form action="{{ route('proyek.destroy', ['proyek' => $proyek->proyek_id]) }}" method="POST"
-                                style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger"
-                                    onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="10" class="text-center">Belum ada data proyek.</td>
-                    </tr>
-                @endforelse
+                            {{-- Jika ada gambar --}}
+                            @if (!empty($proyek->media))
+                                <img src="{{ asset('storage/' . $proyek->media) }}" class="card-img-top"
+                                    alt="Gambar {{ $proyek->nama_proyek }}" style="height: 180px; object-fit: cover;">
+                            @else
+                                {{-- Kalau nggak ada gambar, kasih background default --}}
+                                <div class="d-flex align-items-center justify-content-center bg-light"
+                                    style="height: 180px;">
+                                    <span class="text-muted">Tidak ada gambar</span>
+                                </div>
+                            @endif
 
-            </tbody>
-        </table>
+                            <div class="card-body">
+                                <h5 class="card-title mb-2">{{ $proyek->nama_proyek }}</h5>
+                                <p class="card-text mb-1"><strong>Kode Proyek:</strong> {{ $proyek->kode_proyek }}</p>
+                                <p class="card-text mb-1"><strong>Tahun:</strong> {{ $proyek->tahun }}</p>
+                                <p class="card-text mb-1"><strong>Lokasi:</strong> {{ $proyek->lokasi }}</p>
+                                <p class="card-text mb-1"><strong>Anggaran:</strong> {{ $proyek->anggaran }}</p>
+                                <p class="card-text mb-1"><strong>Sumber Dana:</strong> {{ $proyek->sumber_dana }}</p>
+                                <p class="card-text mb-1"><strong>Deskripsi:</strong> {{ $proyek->deskripsi }}</p>
+
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a href="{{ route('proyek.edit', ['proyek' => $proyek->proyek_id]) }}"
+                                        class="btn btn-sm btn-warning">Edit</a>
+
+                                    <form action="{{ route('proyek.destroy', ['proyek' => $proyek->proyek_id]) }}"
+                                        method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+        @endif
     </main>
+
 
     <footer id="footer" class="footer light-background">
 

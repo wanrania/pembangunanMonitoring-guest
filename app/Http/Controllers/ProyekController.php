@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Proyek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProyekController extends Controller
 {
@@ -19,23 +20,31 @@ class ProyekController extends Controller
 
     public function store(Request $request)
     {
-        // dd($request->all());
-
         $request->validate([
             'kode_proyek' => 'required',
             'nama_proyek' => 'required',
+            'tahun'       => 'required|date',
             'lokasi'      => 'required',
             'anggaran'    => 'required',
+            'sumber_dana' => 'nullable',
+            'deskripsi'   => 'nullable',
+            'media'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $data['kode_proyek'] = $request->kode_proyek;
-        $data['nama_proyek'] = $request->nama_proyek;
-        $data['tahun']       = $request->tahun;
-        $data['lokasi']      = $request->lokasi;
-        $data['anggaran']    = $request->anggaran;
-        $data['sumber_dana'] = $request->sumber_dana;
-        $data['deskripsi']   = $request->deskripsi;
-        $data['media']       = $request->media;
+        $data = $request->only([
+            'kode_proyek',
+            'nama_proyek',
+            'tahun',
+            'lokasi',
+            'anggaran',
+            'sumber_dana',
+            'deskripsi',
+        ]);
+
+        if ($request->hasFile('media')) {
+            $path          = $request->file('media')->store('uploads', 'public');
+            $data['media'] = $path;
+        }
 
         Proyek::create($data);
 
@@ -56,30 +65,29 @@ class ProyekController extends Controller
         return view('guest.proyek.edit', $data);
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $proyek_id)
     {
-        $proyek_id = $id;
-        $proyek    = Proyek::findOrFail($proyek_id);
+        $proyek = Proyek::findOrFail($proyek_id);
 
-        $request->validate([
-            'kode_proyek' => 'required',
-            'nama_proyek' => 'required',
-            'lokasi'      => 'required',
-            'anggaran'    => 'required',
+        $data = $request->only([
+            'kode_proyek', 'nama_proyek', 'tahun', 'lokasi', 'anggaran', 'sumber_dana', 'deskripsi',
         ]);
 
-        $proyek->kode_proyek = $request->kode_proyek;
-        $proyek->nama_proyek = $request->nama_proyek;
-        $proyek->tahun       = $request->tahun;
-        $proyek->lokasi      = $request->lokasi;
-        $proyek->anggaran    = $request->anggaran;
-        $proyek->sumber_dana = $request->sumber_dana;
-        $proyek->deskripsi   = $request->deskripsi;
-        $proyek->media       = $request->media;
+        if ($request->hasFile('media')) {
+            // hapus file lama kalau ada
+            if ($proyek->media && Storage::exists('public/' . $proyek->media)) {
+                Storage::delete('public/' . $proyek->media);
+            }
 
-        $proyek->save();
+            // simpan file baru
+            $file          = $request->file('media');
+            $path          = $file->store('uploads', 'public');
+            $data['media'] = $path;
+        }
 
-        return redirect()->route('proyek.index')->with('update', 'Perubahan Data Proyek Berhasil!');
+        $proyek->update($data);
+
+        return redirect()->route('proyek.index')->with('update', 'Data Proyek Berhasil Diperbarui!');
     }
 
     public function destroy(string $id)

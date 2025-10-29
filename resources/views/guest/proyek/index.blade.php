@@ -8,6 +8,14 @@
             <a href="{{ route('proyek.create') }}" class="btn btn-primary">+ Tambah Proyek</a>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @elseif(session('update'))
+            <div class="alert alert-warning">{{ session('update') }}</div>
+        @elseif(session('delete'))
+            <div class="alert alert-danger">{{ session('delete') }}</div>
+        @endif
+
         <div class="row g-4">
             @forelse ($dataProyek as $proyek)
                 <div class="col-md-4">
@@ -18,21 +26,21 @@
                         @endif
 
                         <div class="card-body p-3">
-    {{-- Nama proyek di atas --}}
-    <h5 class="card-title text-uppercase fw-bold text-primary mb-3 text-center">
-        {{ $proyek->nama_proyek }}
-    </h5>
+                            {{-- Nama proyek di atas --}}
+                            <h5 class="card-title text-uppercase fw-bold text-primary mb-3 text-center">
+                                {{ $proyek->nama_proyek }}
+                            </h5>
 
-    {{-- Detail proyek --}}
-    <ul class="list-unstyled mb-3">
-        <li><strong>Kode Proyek:</strong> {{ $proyek->kode_proyek }}</li>
-        <li><strong>Tahun:</strong> {{ $proyek->tahun }}</li>
-        <li><strong>Lokasi:</strong> {{ $proyek->lokasi }}</li>
-        <li><strong>Anggaran:</strong> {{ $proyek->anggaran }}</li>
-        <li><strong>Sumber Dana:</strong> {{ $proyek->sumber_dana }}</li>
-        <li><strong>Deskripsi:</strong> {{ $proyek->deskripsi }}</li>
-    </ul>
-</div>
+                            {{-- Detail proyek --}}
+                            <ul class="list-unstyled mb-3">
+                                <li><strong>Kode Proyek:</strong> {{ $proyek->kode_proyek }}</li>
+                                <li><strong>Tahun:</strong> {{ $proyek->tahun }}</li>
+                                <li><strong>Lokasi:</strong> {{ $proyek->lokasi }}</li>
+                                <li><strong>Anggaran:</strong> {{ $proyek->anggaran }}</li>
+                                <li><strong>Sumber Dana:</strong> {{ $proyek->sumber_dana }}</li>
+                                <li><strong>Deskripsi:</strong> {{ $proyek->deskripsi }}</li>
+                            </ul>
+                        </div>
 
 
 

@@ -33,6 +33,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('warga.index') }}"
+                        class="nav-link {{ request()->routeIs('warga.*') ? 'fw-bold text-primary' : 'text-dark' }}">
+                        Warga
+                    </a>
+                </li>
+
                 {{-- Dropdown User --}}
                 @if (session('user'))
                     <li class="dropdown">

@@ -8,6 +8,14 @@
             <a href="{{ route('user.create') }}" class="btn btn-primary">+ Tambah User</a>
         </div>
 
+        @if (session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @elseif(session('update'))
+            <div class="alert alert-warning">{{ session('update') }}</div>
+        @elseif(session('delete'))
+            <div class="alert alert-danger">{{ session('delete') }}</div>
+        @endif
+
         <div class="row g-4">
             @forelse ($dataUser as $user)
                 <div class="col-md-4">

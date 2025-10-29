@@ -1,44 +1,71 @@
-<header id="header" class="header d-flex align-items-center sticky-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+<header id="header" class="header d-flex align-items-center sticky-top bg-white shadow-sm">
+    <div class="container-fluid container-xl d-flex justify-content-between align-items-center py-3">
 
-            <a href="" class="logo d-flex align-items-center me-auto">
-                <!-- Uncomment the line below if you also wish to use an image logo -->
-                <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">Pembangunan & Monitoring Proyek</h1>
-            </a>
+        {{-- Logo dan Judul --}}
+        <a href="{{ route('dashboard') }}" class="logo d-flex align-items-center text-decoration-none">
+            <img src="{{ asset('assets-guest/img/logo.png') }}" alt="" class="me-2" style="height: 36px;">
+            <h1 class="sitename m-0 fw-bold text-primary">Monitoring Proyek</h1>
+        </a>
 
-            <nav id="navmenu" class="navmenu">
-                <ul>
-                    <li><a href="{{ route('dashboard') }}">Home<br></a></li>
-                    <li><a href="{{ route('proyek.index') }}" class="active">Proyek</a></li>
-                    <li><a href="#services">Services</a></li>
-                    <li><a href="#portfolio">Portfolio</a></li>
-                    <li><a href="#team">Team</a></li>
-                    <li class="dropdown"><a href="#"><span>Dropdown</span> <i
-                                class="bi bi-chevron-down toggle-dropdown"></i></a>
-                        <ul>
-                            <li><a href="#">Dropdown 1</a></li>
-                            <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
-                                        class="bi bi-chevron-down toggle-dropdown"></i></a>
-                                <ul>
-                                    <li><a href="#">Deep Dropdown 1</a></li>
-                                    <li><a href="#">Deep Dropdown 2</a></li>
-                                    <li><a href="#">Deep Dropdown 3</a></li>
-                                    <li><a href="#">Deep Dropdown 4</a></li>
-                                    <li><a href="#">Deep Dropdown 5</a></li>
-                                </ul>
+        {{-- Navbar Menu --}}
+        <nav id="navbar" class="navbar d-none d-md-block">
+            <ul class="d-flex align-items-center list-unstyled m-0 gap-4">
+
+                {{-- Link menu utama --}}
+                <li>
+                    <a href="{{ route('dashboard') }}"
+                        class="nav-link {{ request()->routeIs('dashboard') ? 'fw-bold text-primary' : 'text-dark' }}">
+                        Home
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('proyek.index') }}"
+                        class="nav-link {{ request()->routeIs('proyek.*') ? 'fw-bold text-primary' : 'text-dark' }}">
+                        Proyek
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('user.index') }}"
+                        class="nav-link {{ request()->routeIs('user.*') ? 'fw-bold text-primary' : 'text-dark' }}">
+                        User
+                    </a>
+                </li>
+
+                {{-- Dropdown User --}}
+                @if (session('user'))
+                    <li class="dropdown">
+                        <a href="#" class="nav-link dropdown-toggle text-dark fw-semibold"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1"></i> {{ session('user')->name }}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li>
+                                <form action="{{ route('logout') }}" method="POST" id="logout-form"
+                                    style="display: none;">
+                                    @csrf
+                                </form>
+
+                                <a class="dropdown-item" href="#"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="bi bi-box-arrow-right me-1"></i> Logout
+                                </a>
                             </li>
-                            <li><a href="#">Dropdown 2</a></li>
-                            <li><a href="#">Dropdown 3</a></li>
-                            <li><a href="#">Dropdown 4</a></li>
                         </ul>
                     </li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-            </nav>
+                @else
+                    <li>
+                        <a href="{{ route('login') }}"
+                            class="btn btn-outline-primary btn-sm rounded-pill px-3 py-1 {{ request()->routeIs('login') ? 'active' : '' }}">
+                            Login
+                        </a>
+                    </li>
+                @endif
+            </ul>
+        </nav>
 
-            <a class="btn-getstarted" href="#about">Login</a>
-
-        </div>
-    </header>
+        {{-- Mobile Navbar Toggle --}}
+        <i class="bi bi-list mobile-nav-toggle d-md-none fs-2 text-dark"></i>
+    </div>
+</header>

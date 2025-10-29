@@ -46,7 +46,8 @@
                 <input type="file" name="media" id="media" class="form-control" accept="image/*">
             </div>
 
-            <button type="submit" class="btn btn-primary">Simpan</button>
+            <button type="submit" class="btn btn-success">Simpan</button>
+        <a href="{{ route('proyek.index') }}" class="btn btn-secondary">Kembali</a>
         </form>
 
     </main>

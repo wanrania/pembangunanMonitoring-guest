@@ -5,7 +5,10 @@
     <main class="container mt-5">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h3 class="fw-bold text-primary">Daftar Proyek</h3>
-            <a href="{{ route('proyek.create') }}" class="btn btn-primary">+ Tambah Proyek</a>
+            <a href="{{ route('proyek.create') }}" class="btn btn-primary">
+                <i class="fa-solid fa-plus me-1"></i> Tambah Proyek
+            </a>
+
         </div>
 
         @if (session('success'))
@@ -45,15 +48,19 @@
 
 
                         <div class="card-footer bg-transparent border-0 d-flex justify-content-between p-3">
-                            <a href="{{ route('proyek.edit', ['proyek' => $proyek->proyek_id]) }}"
-                                class="btn btn-warning btn-sm px-3">Edit</a>
-                            <form action="{{ route('proyek.destroy', ['proyek' => $proyek->proyek_id]) }}" method="POST"
+                            <a href="{{ route('proyek.edit', $proyek->proyek_id) }}" class="btn btn-warning btn-sm">
+                                <i class="fa-solid fa-pen-to-square me-1"></i> Edit
+                            </a>
+
+                            <form action="{{ route('proyek.destroy', $proyek->proyek_id) }}" method="POST"
                                 style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn-danger btn-sm px-3"
-                                    onclick="return confirm('Yakin hapus data ini?')">Hapus</button>
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    <i class="fa-solid fa-trash-can me-1"></i> Hapus
+                                </button>
                             </form>
+
                         </div>
                     </div>
                 </div>

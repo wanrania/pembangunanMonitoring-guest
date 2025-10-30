@@ -11,12 +11,12 @@ class UserController extends Controller
     public function index()
     {
         $dataUser = User::all();
-        return view('guest.user.index', compact('dataUser'));
+        return view('pages.guest.user.index', compact('dataUser'));
     }
 
     public function create()
     {
-        return view('guest.user.create');
+        return view('pages.guest.user.create');
     }
 
     public function store(Request $request)
@@ -39,7 +39,7 @@ class UserController extends Controller
     public function edit($id)
     {
         $dataUser = User::findOrFail($id);
-        return view('guest.user.edit', compact('dataUser'));
+        return view('pages.guest.user.edit', compact('dataUser'));
     }
 
     public function update(Request $request, $id)

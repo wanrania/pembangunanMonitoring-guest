@@ -64,3 +64,10 @@
         </div>
 
     </footer>
+
+    <!-- Floating WhatsApp Button -->
+<a href="https://wa.me/6282286667590?text=Halo%20Admin%2C%20saya%20ingin%20bertanya%20tentang%20Monitoring%20Proyek."
+   class="whatsapp-float" target="_blank" title="Hubungi via WhatsApp">
+   <i class="fa-brands fa-whatsapp"></i>
+</a>
+

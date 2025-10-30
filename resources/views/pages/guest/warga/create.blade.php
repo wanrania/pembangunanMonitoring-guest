@@ -49,8 +49,13 @@
                 <input type="email" name="email" value="{{ old('email') }}" class="form-control">
             </div>
 
-            <button class="btn btn-primary">Simpan</button>
-            <a href="{{ route('warga.index') }}" class="btn btn-secondary">Batal</a>
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk me-1"></i> Simpan
+            </button>
+
+            <a href="{{ route('warga.index') }}" class="btn btn-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i> Kembali
+            </a>
         </form>
     </div>
 </main>

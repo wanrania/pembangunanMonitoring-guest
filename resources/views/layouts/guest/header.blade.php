@@ -20,6 +20,13 @@
                 </li>
 
                 <li>
+                    <a href="{{ route('about') }}"
+                        class="nav-link {{ request()->routeIs('about') ? 'fw-bold text-primary' : 'text-dark' }}">
+                        About
+                    </a>
+                </li>
+
+                <li>
                     <a href="{{ route('proyek.index') }}"
                         class="nav-link {{ request()->routeIs('proyek.*') ? 'fw-bold text-primary' : 'text-dark' }}">
                         Proyek
@@ -39,6 +46,8 @@
                         Warga
                     </a>
                 </li>
+
+
 
                 {{-- Dropdown User --}}
                 @if (session('user'))

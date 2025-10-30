@@ -46,8 +46,14 @@
                 <input type="file" name="media" id="media" class="form-control" accept="image/*">
             </div>
 
-            <button type="submit" class="btn btn-success">Simpan</button>
-        <a href="{{ route('proyek.index') }}" class="btn btn-secondary">Kembali</a>
+            <button type="submit" class="btn btn-success">
+                <i class="fa-solid fa-floppy-disk me-1"></i> Simpan
+            </button>
+
+            <a href="{{ route('proyek.index') }}" class="btn btn-secondary">
+                <i class="fa-solid fa-arrow-left me-1"></i> Kembali
+            </a>
+
         </form>
 
     </main>

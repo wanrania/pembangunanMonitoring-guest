@@ -64,6 +64,20 @@
             </div>
         </div>
 
+        {{-- Card Lokasi Proyek --}}
+        <div class="col-md-4 mb-4">
+            <div class="card dashboard-card shadow-sm border-0 text-center p-4 h-100">
+                <div class="icon-wrapper mb-3">
+                    <i class="fa-solid fa-map-marker-alt text-info" style="font-size: 48px;"></i>
+                </div>
+                <h5 class="fw-bold mb-2 text-dark">Kelola Lokasi Proyek</h5>
+                <p class="mb-3 text-muted">Lihat dan kelola semua lokasi proyek</p>
+                <a href="{{ route('lokasi.index') }}" class="btn btn-info text-white">
+                    <i class="fa-solid fa-right-to-bracket me-1"></i> Masuk
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
 @endsection

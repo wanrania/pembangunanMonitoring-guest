@@ -47,6 +47,20 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{ route('warga.index') }}"
+                        class="nav-link {{ request()->routeIs('warga.*') ? 'fw-bold text-primary' : 'text-dark' }}">
+                        Warga
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('lokasi.index') }}"
+                        class="nav-link {{ request()->routeIs('lokasi.*') ? 'fw-bold text-primary' : 'text-dark' }}">
+                        Lokasi Proyek
+                    </a>
+                </li>
+
 
 
                 {{-- Dropdown User --}}

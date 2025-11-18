@@ -1,11 +1,12 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProyekController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LokasiProyekController;
 
 // Auth
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -27,3 +28,5 @@ Route::resource('warga', WargaController::class);
 Route::get('/about', function () {
     return view('pages.guest.about');
 })->name('about');
+
+Route::resource('lokasi', LokasiProyekController::class);

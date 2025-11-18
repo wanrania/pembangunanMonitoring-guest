@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\User;
@@ -15,13 +14,15 @@ class DatabaseSeeder extends Seeder
     {
         // Seed user
         User::factory()->create([
-            'name' => 'Test User',
+            'name'  => 'Test User',
             'email' => 'test@example.com',
         ]);
 
-        // Tambahkan ini untuk men-seed tabel warga
+        // Tambahkan ini untuk men-seed semua tabel lainnya
         $this->call([
             CreateWargaDummy::class,
+            CreateProyekSeeder::class,
+            CreateLokasiProyekSeeder::class, // relasi proyek → lokasi
         ]);
     }
 }

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -12,8 +11,8 @@ class Proyek extends Model
     protected $table = 'proyek';
 
     protected $primaryKey = 'proyek_id';
-    public $incrementing = true;
-    protected $keyType = 'int';
+    public $incrementing  = true;
+    protected $keyType    = 'int';
 
     protected $fillable = [
         'kode_proyek',
@@ -25,4 +24,10 @@ class Proyek extends Model
         'deskripsi',
         'media',
     ];
+
+    public function lokasi()
+    {
+        return $this->hasMany(LokasiProyek::class, 'proyek_id', 'proyek_id');
+    }
+
 }

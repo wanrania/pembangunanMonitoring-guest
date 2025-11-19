@@ -12,15 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed user
-        User::factory()->create([
-            'name'  => 'Test User',
-            'email' => 'test@example.com',
-        ]);
 
         // Tambahkan ini untuk men-seed semua tabel lainnya
         $this->call([
             CreateWargaDummy::class,
+            CreateFirstUser::class,
             CreateProyekSeeder::class,
             CreateLokasiProyekSeeder::class, // relasi proyek → lokasi
         ]);

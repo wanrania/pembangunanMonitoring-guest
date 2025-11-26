@@ -7,9 +7,16 @@ use Illuminate\Support\Facades\Storage;
 
 class ProyekController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['dataProyek'] = Proyek::all();
+        $filterable = ['sumber_dana'];
+        $searchable = ['nama_proyek', 'kode_proyek', 'lokasi', 'deskripsi'];
+
+        $data['dataProyek'] = Proyek::filter($request, $filterable)
+            ->search($request, $searchable)
+            ->paginate(12)
+            ->withQueryString();
+
         return view('pages.guest.proyek.index', $data);
     }
 

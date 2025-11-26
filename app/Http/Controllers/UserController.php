@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -8,9 +7,16 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $dataUser = User::all();
+        $filterable = ['name', 'email'];
+        $searchable = ['name', 'email'];
+
+        $dataUser = User::filter($request, $filterable)
+            ->search($request, $searchable)
+            ->paginate(12)
+            ->withQueryString();
+
         return view('pages.guest.user.index', compact('dataUser'));
     }
 
@@ -24,13 +30,13 @@ class UserController extends Controller
         $request->validate([
             'name'     => 'required|string|max:100',
             'email'    => 'required|email|unique:users',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
         ]);
 
         User::create([
             'name'     => $request->name,
             'email'    => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
         return redirect()->route('user.index')->with('success', 'User berhasil ditambahkan!');
@@ -47,14 +53,14 @@ class UserController extends Controller
         $dataUser = User::findOrFail($id);
 
         $request->validate([
-            'name'  => 'required|string|max:100',
-            'email' => 'required|email|unique:users,email,'.$dataUser->id,
-            'password' => 'nullable|min:6'
+            'name'     => 'required|string|max:100',
+            'email'    => 'required|email|unique:users,email,' . $dataUser->id,
+            'password' => 'nullable|min:6',
         ]);
 
         $data = [
             'name'  => $request->name,
-            'email' => $request->email
+            'email' => $request->email,
         ];
 
         if ($request->filled('password')) {

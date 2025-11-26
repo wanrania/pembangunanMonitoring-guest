@@ -2,38 +2,42 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory as Faker;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use App\Models\Proyek;
 
 class CreateLokasiProyekSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $proyek1 = Proyek::where('kode_proyek', 'PRY-001')->first();
-        $proyek2 = Proyek::where('kode_proyek', 'PRY-002')->first();
+        $faker = Faker::create('id_ID');
 
-        DB::table('lokasi_proyek')->insert([
-            [
-                'proyek_id' => $proyek1->proyek_id,
-                'lat'       => '-0.789275',
-                'lng'       => '113.921327',
-                'geojson'   => null,
-                'created_at'=> now(),
-                'updated_at'=> now(),
-            ],
-            [
-                'proyek_id' => $proyek2->proyek_id,
-                'lat'       => '-0.912928',
-                'lng'       => '114.028373',
-                'geojson'   => null,
-                'created_at'=> now(),
-                'updated_at'=> now(),
-            ]
-        ]);
+        // Ambil semua proyek_id yang sudah ada
+        $proyekIds = DB::table('proyek')->pluck('proyek_id')->toArray();
+
+        // Cegah error foreign key
+        if (empty($proyekIds)) {
+            dd("ERROR: Tabel proyek kosong. Jalankan CreateProyekSeeder dulu!");
+        }
+
+        foreach (range(1, 1000) as $i) {
+
+            $proyek_id = $faker->randomElement($proyekIds);
+
+            DB::table('lokasi_proyek')->insert([
+                'proyek_id' => $proyek_id,
+                'lat'       => $faker->latitude(-11, 6),
+                'lng'       => $faker->longitude(95, 141),
+                'geojson'   => json_encode([
+                    "type" => "Point",
+                    "coordinates" => [
+                        (float)$faker->longitude(95, 141),
+                        (float)$faker->latitude(-11, 6)
+                    ]
+                ]),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+        }
     }
 }

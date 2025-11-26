@@ -10,6 +10,43 @@
             </a>
         </div>
 
+        <div class="table-responsive mb-3">
+            <form method="GET" onchange="this.submit()">
+                <div class="row g-2">
+
+                    <div class="col-md-3">
+                        <select name="email" class="form-select">
+                            <option value="">Semua Email</option>
+                            <option value="@gmail.com" {{ request('email') == '@gmail.com' ? 'selected' : '' }}>Gmail.com
+                            </option>
+                            <option value="@yahoo.com" {{ request('email') == '@yahoo.com' ? 'selected' : '' }}>Yahoo.com
+                            </option>
+                            <option value="@example.com" {{ request('email') == '@example.com' ? 'selected' : '' }}>
+                                Example.com
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search..."
+                                value="{{ request('search') }}">
+
+                            <button class="btn btn-outline-secondary" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            @if (request('search'))
+                                <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"
+                                    class="btn btn-outline-secondary ml-3" id="clear-search"> Clear</a>
+                            @endif
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @elseif(session('update'))
@@ -38,8 +75,7 @@
                             <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fa-solid fa-pen-to-square me-1"></i> Edit
                             </a>
-                            <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                style="display:inline;">
+                            <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">
@@ -55,6 +91,11 @@
                 </div>
             @endforelse
         </div>
+
+        <div class="mt-3">
+            {{ $dataUser->links('pagination::bootstrap-5') }}
+        </div>
+
     </main>
 
 @endsection

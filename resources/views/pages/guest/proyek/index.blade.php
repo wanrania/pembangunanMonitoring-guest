@@ -8,8 +8,44 @@
             <a href="{{ route('proyek.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-plus me-1"></i> Tambah Proyek
             </a>
-
         </div>
+
+        <div class="table-responsive mb-3">
+            <form method="GET" onchange="this.submit()">
+                <div class="row g-2">
+
+                    {{-- Sumber Dana --}}
+                    <div class="col-md-3">
+                        <select name="sumber_dana" class="form-select">
+                            <option value="">Semua Sumber Dana</option>
+                            <option value="APBN" {{ request('sumber_dana') == 'APBN' ? 'selected' : '' }}>APBN</option>
+                            <option value="APBD" {{ request('sumber_dana') == 'APBD' ? 'selected' : '' }}>APBD</option>
+                            <option value="Dana Desa" {{ request('sumber_dana') == 'Dana Desa' ? 'selected' : '' }}>Dana
+                                Desa
+                            </option>
+                            <option value="CSR" {{ request('sumber_dana') == 'CSR' ? 'selected' : '' }}>CSR</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" placeholder="Search..."
+                                value="{{ request('search') }}">
+
+                            <button class="btn btn-outline-secondary" type="submit">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </button>
+                            @if (request('search'))
+                                <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}"
+                                    class="btn btn-outline-secondary ml-3" id="clear-search"> Clear</a>
+                            @endif
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
 
         @if (session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
@@ -70,6 +106,11 @@
                 </div>
             @endforelse
         </div>
+
+        <div class="mt-3">
+            {{ $dataProyek->links('pagination::bootstrap-5') }}
+        </div>
+
     </main>
 
     {{-- end main content --}}

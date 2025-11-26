@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\Warga;
@@ -7,9 +6,17 @@ use Illuminate\Http\Request;
 
 class WargaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['dataWarga'] = Warga::orderBy('nama')->get();
+        $filterable = ['jenis_kelamin', 'agama', 'pekerjaan'];
+        $searchable = ['nama', 'no_ktp', 'email', 'pekerjaan'];
+
+        $data['dataWarga'] = Warga::orderBy('nama')
+            ->filter($request, $filterable)
+            ->search($request, $searchable)
+            ->paginate(12)
+            ->withQueryString();
+
         return view('pages.guest.warga.index', $data);
     }
 
@@ -21,17 +28,17 @@ class WargaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_ktp' => 'required|unique:warga,no_ktp',
-            'nama' => 'required|string',
+            'no_ktp'        => 'required|unique:warga,no_ktp',
+            'nama'          => 'required|string',
             'jenis_kelamin' => 'required|in:L,P',
-            'agama' => 'nullable|string',
-            'pekerjaan' => 'nullable|string',
-            'telp' => 'nullable|string',
-            'email' => 'nullable|email|unique:warga,email',
+            'agama'         => 'nullable|string',
+            'pekerjaan'     => 'nullable|string',
+            'telp'          => 'nullable|string',
+            'email'         => 'nullable|email|unique:warga,email',
         ]);
 
         Warga::create($request->only([
-            'no_ktp','nama','jenis_kelamin','agama','pekerjaan','telp','email'
+            'no_ktp', 'nama', 'jenis_kelamin', 'agama', 'pekerjaan', 'telp', 'email',
         ]));
 
         return redirect()->route('warga.index')->with('success', 'Data Warga berhasil ditambahkan!');
@@ -48,17 +55,17 @@ class WargaController extends Controller
         $warga = Warga::findOrFail($id);
 
         $request->validate([
-            'no_ktp' => 'required|unique:warga,no_ktp,'.$warga->warga_id.',warga_id',
-            'nama' => 'required|string',
+            'no_ktp'        => 'required|unique:warga,no_ktp,' . $warga->warga_id . ',warga_id',
+            'nama'          => 'required|string',
             'jenis_kelamin' => 'required|in:L,P',
-            'agama' => 'nullable|string',
-            'pekerjaan' => 'nullable|string',
-            'telp' => 'nullable|string',
-            'email' => 'nullable|email|unique:warga,email,'.$warga->warga_id.',warga_id',
+            'agama'         => 'nullable|string',
+            'pekerjaan'     => 'nullable|string',
+            'telp'          => 'nullable|string',
+            'email'         => 'nullable|email|unique:warga,email,' . $warga->warga_id . ',warga_id',
         ]);
 
         $warga->update($request->only([
-            'no_ktp','nama','jenis_kelamin','agama','pekerjaan','telp','email'
+            'no_ktp', 'nama', 'jenis_kelamin', 'agama', 'pekerjaan', 'telp', 'email',
         ]));
 
         return redirect()->route('warga.index')->with('update', 'Data Warga berhasil diperbarui!');

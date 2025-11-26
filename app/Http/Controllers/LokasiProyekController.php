@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Models\LokasiProyek;
@@ -8,9 +7,20 @@ use Illuminate\Http\Request;
 
 class LokasiProyekController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data['lokASI'] = LokasiProyek::with('proyek')->get();
+        $filterable = ['proyek_id'];
+        $searchable = ['lat', 'lng', 'geojson'];
+
+        $data['proyek'] = Proyek::all();
+
+        $data['lokASI'] = LokasiProyek::with('proyek')
+            ->filter($request, $filterable)
+            ->search($request, $searchable)
+            ->orderBy('lokasi_id', 'DESC')
+            ->paginate(12)
+            ->withQueryString();
+
         return view('pages.guest.lokasi.index', $data);
     }
 

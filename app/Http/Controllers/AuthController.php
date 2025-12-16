@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -8,33 +9,25 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /* ===================== LOGIN ===================== */
     public function index()
     {
         if (Auth::check()) {
-            //Redirect ke halaman dashboard
             return redirect()->route('dashboard');
         }
-        //Redirect ke halaman login
+
         return view('pages.auth.login');
     }
 
     public function login(Request $request)
     {
-
         $request->validate([
             'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        // Ambil user berdasarkan email
-        $user = User::where('email', $request->email)->first();
-
-        // Cek kecocokan password
-        if ($user && Hash::check($request->password, $user->password)) {
-
-            // LOGIN user secara manual (wajib)
-            Auth::login($user);
-
+        if (Auth::attempt($request->only('email', 'password'))) {
+            $request->session()->regenerate();
             return redirect()->route('dashboard')->with('success', 'Login berhasil!');
         }
 
@@ -43,13 +36,41 @@ class AuthController extends Controller
         ])->withInput();
     }
 
+    /* ===================== REGISTER ===================== */
+    public function registerForm()
+    {
+        if (Auth::check()) {
+            return redirect()->route('dashboard');
+        }
+
+        return view('pages.auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:100',
+            'email'    => 'required|email|unique:users,email',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        User::create([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'role'     => 'Admin', // default role
+        ]);
+
+        return redirect()->route('login')->with('success', 'Registrasi berhasil, silakan login.');
+    }
+
+    /* ===================== LOGOUT ===================== */
     public function logout(Request $request)
     {
         Auth::logout();
-        $request->session()->invalidate();      // Hapus semua session
-        $request->session()->regenerateToken(); // Cegah CSRF
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
-        // Redirect ke halaman login
         return redirect()->route('dashboard');
     }
 }

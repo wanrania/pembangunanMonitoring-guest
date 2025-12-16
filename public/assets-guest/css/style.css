@@ -986,3 +986,203 @@
     background-color: #1ebe5d;
 }
 
+/* ================= AUTH SECTION ================= */
+
+/* AUTH BACKGROUND */
+.auth-bg {
+    min-height: 100vh;
+    background: linear-gradient(
+        135deg,
+        var(--bs-primary),
+        var(--bs-secondary)
+    );
+    position: relative;
+    overflow: hidden;
+}
+
+/* Floating glow shapes */
+.auth-bg::before,
+.auth-bg::after {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    filter: blur(90px);
+}
+
+.auth-bg::before {
+    top: -120px;
+    left: -120px;
+}
+
+.auth-bg::after {
+    bottom: -140px;
+    right: -140px;
+}
+
+/* AUTH CARD (GLASS STYLE) */
+.auth-glass {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(14px);
+    border-radius: 30px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255,255,255,0.4);
+}
+
+/* LOGO & TITLE */
+.auth-logo {
+    height: 250px;
+}
+
+.auth-title {
+    font-weight: 800;
+    color: var(--bs-primary);
+}
+
+.auth-subtitle {
+    font-size: 14px;
+    color: rgba(0,0,0,0.55);
+}
+
+/* INPUT */
+.auth-input {
+    border-radius: 999px;
+    padding-left: 3.2rem;
+    border: 1px solid rgba(0,0,0,0.15);
+}
+
+.auth-input:focus {
+    border-color: var(--bs-secondary);
+    box-shadow: 0 0 0 0.15rem rgba(255, 94, 21, 0.25);
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 22px;
+    transform: translateY(-50%);
+    color: var(--bs-primary);
+    opacity: 0.7;
+}
+
+/* BUTTON PRIMARY */
+.btn-auth {
+    border-radius: 999px;
+    padding: 14px;
+    font-weight: 600;
+    background: linear-gradient(
+        135deg,
+        var(--bs-primary),
+        var(--bs-secondary)
+    );
+    border: none;
+    color: #fff;
+}
+
+.btn-auth:hover {
+    background: linear-gradient(
+        135deg,
+        var(--bs-secondary),
+        var(--bs-primary)
+    );
+    transform: translateY(-1px);
+}
+
+/* SOCIAL BUTTON */
+.btn-social {
+    border-radius: 999px;
+    padding: 12px;
+    font-weight: 500;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+/* DIVIDER */
+.divider {
+    position: relative;
+    text-align: center;
+    margin: 22px 0;
+    color: rgba(0,0,0,0.5);
+    font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: rgba(0,0,0,0.15);
+}
+
+.divider::before { left: 0; }
+.divider::after  { right: 0; }
+
+/* AUTH LINKS */
+.auth-glass a {
+    color: var(--bs-secondary);
+    text-decoration: none;
+}
+
+.auth-glass a:hover {
+    text-decoration: underline;
+}
+
+/* ICON DI INPUT */
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 22px;
+    transform: translateY(-50%);
+    color: var(--bs-primary);
+    opacity: 0.7;
+}
+
+/* TOGGLE PASSWORD EYE */
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 18px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: var(--bs-primary);
+    opacity: 0.7;
+}
+
+.password-toggle:hover {
+    opacity: 1;
+}
+
+/* SOCIAL ICON BUTTON */
+.btn-social-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    border-radius: 999px;
+    padding: 12px;
+    font-weight: 600;
+    border: 1px solid rgba(0,0,0,0.15);
+    background: #fff;
+}
+
+.btn-social-icon i {
+    font-size: 18px;
+}
+
+/* GOOGLE */
+.btn-google i {
+    color: #DB4437;
+}
+
+/* APPLE */
+.btn-apple {
+    background: #000;
+    color: #fff;
+}
+
+.btn-apple i {
+    color: #fff;
+}

@@ -16,7 +16,7 @@
                     <img src="{{ asset('assets-guest/img/about-3.jpg') }}" class="img-2 img-fluid w-50" alt="">
 
                     <div class="about-item-image-content">
-                        <img src="{{ asset('assets-guest/img/about-1.png') }}" class="img-fluid w-100 h-100"
+                        <img src="{{ asset('assets-guest/img/about-1.jpg') }}" class="img-fluid w-100 h-100"
                              style="object-fit: cover;" alt="">
                     </div>
                 </div>

@@ -1,4 +1,5 @@
 <?php
+
 namespace Database\Seeders;
 
 use Faker\Factory as Faker;
@@ -14,23 +15,25 @@ class CreateFirstUser extends Seeder
 
         foreach (range(1, 1000) as $index) {
 
-            // Email selalu unik (gabungan nama + index)
+            // Email selalu unik
             $email = strtolower(str_replace(' ', '', $faker->name)) . $index . '@example.com';
 
             DB::table('users')->insert([
                 'name'       => $faker->name,
                 'email'      => $email,
                 'password'   => Hash::make('password123'),
+                'role'       => 'Staff',   // 👈 DEFAULT USER
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
         }
 
-        // Tambahkan akun admin
+        // Akun ADMIN
         DB::table('users')->insert([
             'name'       => 'Admin',
             'email'      => 'admin@example.com',
             'password'   => Hash::make('admin12345'),
+            'role'       => 'Admin',   // 👈 ROLE ADMIN
             'created_at' => now(),
             'updated_at' => now(),
         ]);

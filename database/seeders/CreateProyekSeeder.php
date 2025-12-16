@@ -38,12 +38,11 @@ class CreateProyekSeeder extends Seeder
             DB::table('proyek')->insert([
                 'kode_proyek' => $kodeProyek,
                 'nama_proyek' => 'Proyek ' . $faker->words(3, true),
-                'tahun'       => $faker->date(),
+                'tahun'       => $faker->year,
                 'lokasi'      => $lokasi,
                 'anggaran'    => $anggaran,
                 'sumber_dana' => $sumberDana,
                 'deskripsi'   => $faker->sentence(12),
-                'media'       => $faker->boolean(30) ? null : 'gambar' . $index . '.jpg',
                 'created_at'  => now(),
                 'updated_at'  => now(),
             ]);

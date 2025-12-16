@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('anggaran', 100);
             $table->string('sumber_dana', 100);
             $table->text('deskripsi');
-            $table->string('media')->nullable();
+            
             $table->timestamps();
         });
     }

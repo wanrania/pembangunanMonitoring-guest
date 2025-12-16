@@ -15,10 +15,13 @@ class DatabaseSeeder extends Seeder
 
         // Tambahkan ini untuk men-seed semua tabel lainnya
         $this->call([
-            CreateWargaDummy::class,
             CreateFirstUser::class,
+            CreateWargaDummy::class,
             CreateProyekSeeder::class,
             CreateLokasiProyekSeeder::class, // relasi proyek → lokasi
+            TahapanProyekSeeder::class,      // relasi proyek → tahapan
+            ProgresProyekSeeder::class,      // relasi proyek & tahapan → progres
+            KontraktorSeeder::class,         // relasi proyek → kontraktor
         ]);
     }
 }

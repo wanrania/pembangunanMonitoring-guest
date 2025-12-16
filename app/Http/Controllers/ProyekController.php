@@ -1,109 +1,194 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Proyek;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProyekController extends Controller
 {
+    // =============================================
+    // Function pembatas khusus STAFF
+    // =============================================
+    private function blockStaff()
+{
+    if (Auth::check() && Auth::user()->role === 'Staff') {
+        abort(403, 'Staff tidak diperbolehkan mengedit atau menghapus data.');
+    }
+}
+
+
+
+    /* =====================================================
+        INDEX
+    ===================================================== */
     public function index(Request $request)
     {
-        $filterable = ['sumber_dana'];
+        $filterable = ['sumber_dana', 'tahun'];
         $searchable = ['nama_proyek', 'kode_proyek', 'lokasi', 'deskripsi'];
 
-        $data['dataProyek'] = Proyek::filter($request, $filterable)
+        $data['dataProyek'] = Proyek::with('media')
+            ->filter($request, $filterable)
             ->search($request, $searchable)
-            ->paginate(12)
+            ->paginate(9)
             ->withQueryString();
 
         return view('pages.guest.proyek.index', $data);
     }
 
+    /* =====================================================
+        CREATE
+    ===================================================== */
     public function create()
     {
         return view('pages.guest.proyek.create');
     }
 
+    /* =====================================================
+        STORE
+    ===================================================== */
     public function store(Request $request)
     {
         $request->validate([
-            'kode_proyek' => 'required',
+            'kode_proyek' => 'required|unique:proyek,kode_proyek',
             'nama_proyek' => 'required',
-            'tahun'       => 'required|date',
-            'lokasi'      => 'required',
-            'anggaran'    => 'required',
-            'sumber_dana' => 'nullable',
-            'deskripsi'   => 'nullable',
-            'media'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'tahun'       => 'required',
+            'media.*'     => 'nullable|file|max:5120'
         ]);
 
-        $data = $request->only([
-            'kode_proyek',
-            'nama_proyek',
-            'tahun',
-            'lokasi',
-            'anggaran',
-            'sumber_dana',
-            'deskripsi',
+        $proyek = Proyek::create([
+            'kode_proyek' => $request->kode_proyek,
+            'nama_proyek' => $request->nama_proyek,
+            'tahun'       => $request->tahun,
+            'lokasi'      => $request->lokasi,
+            'anggaran'    => $request->anggaran,
+            'sumber_dana' => $request->sumber_dana,
+            'deskripsi'   => $request->deskripsi,
         ]);
 
+        /* ==== MEDIA ==== */
         if ($request->hasFile('media')) {
-            $path          = $request->file('media')->store('uploads', 'public');
-            $data['media'] = $path;
+            foreach ($request->file('media') as $i => $file) {
+
+                $path = $file->store('media_proyek', 'public');
+
+                Media::create([
+                    'ref_table' => 'proyek',
+                    'ref_id'    => $proyek->proyek_id,
+                    'file_name' => $path,
+                    'mime_type' => $file->getClientMimeType(),
+                    'sort_order'=> $i,
+                ]);
+            }
         }
 
-        Proyek::create($data);
-
-        return redirect()->route('proyek.index')->with('success', 'Data Proyek Berhasil Ditambahkan!');
+        return redirect()->route('proyek.index')->with('success', 'Proyek berhasil ditambahkan');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    /* =====================================================
+        SHOW
+    ===================================================== */
+    public function show($id)
     {
-        //
+        $proyek = Proyek::with('media')->findOrFail($id);
+        return view('pages.guest.proyek.show', compact('proyek'));
     }
 
+    /* =====================================================
+        EDIT
+    ===================================================== */
     public function edit($id)
     {
-        $data['dataProyek'] = Proyek::findOrFail($id);
-        return view('pages.guest.proyek.edit', $data);
+        $this->blockStaff(); // STAFF DIBLOK
+
+        $proyek = Proyek::with('media')->findOrFail($id);
+        return view('pages.guest.proyek.edit', compact('proyek'));
     }
 
-    public function update(Request $request, $proyek_id)
+    /* =====================================================
+        UPDATE
+    ===================================================== */
+    public function update(Request $request, $id)
     {
-        $proyek = Proyek::findOrFail($proyek_id);
+        $this->blockStaff(); // STAFF DIBLOK
 
-        $data = $request->only([
-            'kode_proyek', 'nama_proyek', 'tahun', 'lokasi', 'anggaran', 'sumber_dana', 'deskripsi',
+        $proyek = Proyek::findOrFail($id);
+
+        $request->validate([
+            'kode_proyek' => 'required|unique:proyek,kode_proyek,' . $id . ',proyek_id',
+            'nama_proyek' => 'required',
+            'media.*'     => 'nullable|file|max:5120'
         ]);
 
-        if ($request->hasFile('media')) {
-            // hapus file lama kalau ada
-            if ($proyek->media && Storage::exists('public/' . $proyek->media)) {
-                Storage::delete('public/' . $proyek->media);
-            }
+        $proyek->update([
+            'kode_proyek' => $request->kode_proyek,
+            'nama_proyek' => $request->nama_proyek,
+            'tahun'       => $request->tahun,
+            'lokasi'      => $request->lokasi,
+            'anggaran'    => $request->anggaran,
+            'sumber_dana' => $request->sumber_dana,
+            'deskripsi'   => $request->deskripsi,
+        ]);
 
-            // simpan file baru
-            $file          = $request->file('media');
-            $path          = $file->store('uploads', 'public');
-            $data['media'] = $path;
+        /* ==== MEDIA TAMBAHAN ==== */
+        if ($request->hasFile('media')) {
+
+            $lastSort = Media::where('ref_table', 'proyek')
+                ->where('ref_id', $proyek->proyek_id)
+                ->max('sort_order') ?? 0;
+
+            foreach ($request->file('media') as $i => $file) {
+
+                $path = $file->store('media_proyek', 'public');
+
+                Media::create([
+                    'ref_table' => 'proyek',
+                    'ref_id'    => $proyek->proyek_id,
+                    'file_name' => $path,
+                    'mime_type' => $file->getClientMimeType(),
+                    'sort_order'=> $lastSort + $i + 1,
+                ]);
+            }
         }
 
-        $proyek->update($data);
-
-        return redirect()->route('proyek.index')->with('update', 'Data Proyek Berhasil Diperbarui!');
+        return back()->with('success', 'Proyek berhasil diperbarui');
     }
 
-    public function destroy(string $id)
+    /* =====================================================
+        DELETE PROYEK
+    ===================================================== */
+    public function destroy($id)
     {
-        $proyek = Proyek::findOrFail($id);
+        $this->blockStaff(); // STAFF DIBLOK
+
+        $proyek = Proyek::with('media')->findOrFail($id);
+
+        foreach ($proyek->media as $media) {
+            Storage::disk('public')->delete($media->file_name);
+            $media->delete();
+        }
 
         $proyek->delete();
 
-        return redirect()->route('proyek.index')->with('delete', 'Data Proyek Berhasil Dihapus!');
+        return redirect()->route('proyek.index')->with('success', 'Proyek berhasil dihapus');
     }
 
+    /* =====================================================
+        DELETE MEDIA SATUAN
+    ===================================================== */
+    public function destroyMedia($id)
+    {
+        $this->blockStaff(); // STAFF DIBLOK
+
+        $media = Media::findOrFail($id);
+
+        Storage::disk('public')->delete($media->file_name);
+        $media->delete();
+
+        return back()->with('success', 'Media berhasil dihapus');
+    }
 }

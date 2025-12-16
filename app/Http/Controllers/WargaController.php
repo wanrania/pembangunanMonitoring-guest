@@ -1,11 +1,27 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Warga;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class WargaController extends Controller
 {
+    /* =====================================================
+        STAFF PROTECTION
+        Staff tidak boleh edit, update, delete data warga
+    ===================================================== */
+    private function blockStaff()
+    {
+        if (Auth::check() && Auth::user()->role === 'Staff') {
+            abort(403, 'Staff tidak diperbolehkan mengubah atau menghapus data warga.');
+        }
+    }
+
+    /* =====================================================
+        INDEX — List Data Warga
+    ===================================================== */
     public function index(Request $request)
     {
         $filterable = ['jenis_kelamin', 'agama', 'pekerjaan'];
@@ -20,11 +36,17 @@ class WargaController extends Controller
         return view('pages.guest.warga.index', $data);
     }
 
+    /* =====================================================
+        CREATE — Form Tambah Warga
+    ===================================================== */
     public function create()
     {
         return view('pages.guest.warga.create');
     }
 
+    /* =====================================================
+        STORE — Simpan data warga
+    ===================================================== */
     public function store(Request $request)
     {
         $request->validate([
@@ -37,21 +59,40 @@ class WargaController extends Controller
             'email'         => 'nullable|email|unique:warga,email',
         ]);
 
-        Warga::create($request->only([
-            'no_ktp', 'nama', 'jenis_kelamin', 'agama', 'pekerjaan', 'telp', 'email',
-        ]));
+        Warga::create([
+            'no_ktp'        => $request->no_ktp,
+            'nama'          => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'agama'         => $request->agama,
+            'pekerjaan'     => $request->pekerjaan,
+            'telp'          => $request->telp,
+            'email'         => $request->email,
+        ]);
 
-        return redirect()->route('warga.index')->with('success', 'Data Warga berhasil ditambahkan!');
+        return redirect()->route('warga.index')
+            ->with('success', 'Data Warga berhasil ditambahkan!');
     }
 
+    /* =====================================================
+        EDIT — Form Edit Warga
+        STAFF DIBLOK
+    ===================================================== */
     public function edit($id)
     {
+        $this->blockStaff();
+
         $data['dataWarga'] = Warga::findOrFail($id);
         return view('pages.guest.warga.edit', $data);
     }
 
+    /* =====================================================
+        UPDATE — Perbarui Data Warga
+        STAFF DIBLOK
+    ===================================================== */
     public function update(Request $request, $id)
     {
+        $this->blockStaff();
+
         $warga = Warga::findOrFail($id);
 
         $request->validate([
@@ -64,17 +105,41 @@ class WargaController extends Controller
             'email'         => 'nullable|email|unique:warga,email,' . $warga->warga_id . ',warga_id',
         ]);
 
-        $warga->update($request->only([
-            'no_ktp', 'nama', 'jenis_kelamin', 'agama', 'pekerjaan', 'telp', 'email',
-        ]));
+        $warga->update([
+            'no_ktp'        => $request->no_ktp,
+            'nama'          => $request->nama,
+            'jenis_kelamin' => $request->jenis_kelamin,
+            'agama'         => $request->agama,
+            'pekerjaan'     => $request->pekerjaan,
+            'telp'          => $request->telp,
+            'email'         => $request->email,
+        ]);
 
-        return redirect()->route('warga.index')->with('update', 'Data Warga berhasil diperbarui!');
+        return redirect()->route('warga.index')
+            ->with('update', 'Data Warga berhasil diperbarui!');
     }
 
+    /* =====================================================
+        DESTROY — Hapus Warga
+        STAFF DIBLOK
+    ===================================================== */
     public function destroy($id)
     {
+        $this->blockStaff();
+
         $warga = Warga::findOrFail($id);
         $warga->delete();
-        return redirect()->route('warga.index')->with('delete', 'Data Warga berhasil dihapus!');
+
+        return redirect()->route('warga.index')
+            ->with('delete', 'Data Warga berhasil dihapus!');
+    }
+
+    /* =====================================================
+        SHOW — Detail Warga
+    ===================================================== */
+    public function show($id)
+    {
+        $dataWarga = Warga::findOrFail($id);
+        return view('pages.guest.warga.show', compact('dataWarga'));
     }
 }

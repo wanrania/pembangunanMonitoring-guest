@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up()
+    {
+        Schema::create('media', function (Blueprint $table) {
+            $table->id('media_id');
+            $table->string('ref_table');          // nama tabel yang direferensikan
+            $table->unsignedBigInteger('ref_id'); // id data dari tabel referensi
+            $table->string('file_name');          // nama file yang diupload (ganti file_url -> file_name)
+            $table->string('caption')->nullable();
+            $table->string('mime_type')->nullable();
+            $table->integer('sort_order')->default(0);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('media');
+    }
+};

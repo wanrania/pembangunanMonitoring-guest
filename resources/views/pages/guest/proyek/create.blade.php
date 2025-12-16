@@ -1,61 +1,90 @@
 @extends('layouts.guest.app')
 
 @section('content')
-    {{-- start main content --}}
-    <main class="container mt-5">
-        <h3>Tambah Data Proyek</h3>
-        <form action="{{ route('proyek.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            <div class="mb-3">
-                <label for="kode_proyek" class="form-label">Kode Proyek</label>
-                <input type="text" name="kode_proyek" id="kode_proyek" class="form-control" required>
+
+<!-- Header Start -->
+<div class="container-fluid bg-breadcrumb">
+    <div class="container text-center py-5" style="max-width:900px;">
+        <h4 class="text-white display-4 mb-4 wow fadeInDown">
+            Tambah Proyek
+        </h4>
+        <ol class="breadcrumb d-flex justify-content-center mb-0 wow fadeInDown">
+            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('proyek.index') }}">Proyek</a></li>
+            <li class="breadcrumb-item active text-secondary">Tambah</li>
+        </ol>
+    </div>
+</div>
+<!-- Header End -->
+
+<div class="container-fluid feature bg-light py-5">
+    <div class="container py-5">
+
+        <div class="row justify-content-center">
+            <div class="col-lg-6 wow fadeInUp">
+
+                <div class="feature-item border p-5">
+
+                    <h4 class="text-center mb-4 fw-bold">Form Tambah Proyek</h4>
+
+                    <form method="POST" action="{{ route('proyek.store') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        {{-- KODE PROYEK --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Kode Proyek</label>
+                            <input type="text" name="kode_proyek" class="form-control" required>
+                        </div>
+
+                        {{-- NAMA PROYEK --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Nama Proyek</label>
+                            <input type="text" name="nama_proyek" class="form-control" required>
+                        </div>
+
+                        {{-- TAHUN --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Tahun</label>
+                            <input type="number" name="tahun" class="form-control" required>
+                        </div>
+
+                        {{-- LOKASI --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Lokasi</label>
+                            <input type="text" name="lokasi" class="form-control" required>
+                        </div>
+
+                        {{-- DESKRIPSI --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Deskripsi</label>
+                            <textarea name="deskripsi" class="form-control" rows="4" required></textarea>
+                        </div>
+
+                        {{-- UPLOAD MEDIA --}}
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">Dokumentasi Proyek</label>
+                            <input type="file" name="media[]" class="form-control" multiple>
+                        </div>
+
+                        {{-- BUTTON --}}
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ route('proyek.index') }}" class="btn btn-outline-secondary">
+                                Kembali
+                            </a>
+
+                            <button type="submit" class="btn btn-primary px-4">
+                                Simpan
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+
             </div>
+        </div>
 
-            <div class="mb-3">
-                <label for="nama_proyek" class="form-label">Nama Proyek</label>
-                <input type="text" name="nama_proyek" id="nama_proyek" class="form-control" required>
-            </div>
+    </div>
+</div>
 
-            <div class="mb-3">
-                <label for="tahun" class="form-label">Tahun</label>
-                <input type="date" name="tahun" id="tahun" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="lokasi" class="form-label">Lokasi</label>
-                <input type="text" name="lokasi" id="lokasi" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="anggaran" class="form-label">Anggaran</label>
-                <input type="text" name="anggaran" id="anggaran" class="form-control" required>
-            </div>
-
-            <div class="mb-3">
-                <label for="sumber_dana" class="form-label">Sumber Dana</label>
-                <input type="text" name="sumber_dana" id="sumber_dana" class="form-control">
-            </div>
-
-            <div class="mb-3">
-                <label for="deskripsi" class="form-label">Deskripsi</label>
-                <textarea name="deskripsi" id="deskripsi" class="form-control"></textarea>
-            </div>
-
-            <div class="mb-3">
-                <label for="media" class="form-label">Upload Media (gambar optional)</label>
-                <input type="file" name="media" id="media" class="form-control" accept="image/*">
-            </div>
-
-            <button type="submit" class="btn btn-success">
-                <i class="fa-solid fa-floppy-disk me-1"></i> Simpan
-            </button>
-
-            <a href="{{ route('proyek.index') }}" class="btn btn-secondary">
-                <i class="fa-solid fa-arrow-left me-1"></i> Kembali
-            </a>
-
-        </form>
-
-    </main>
-    {{-- end main content --}}
 @endsection

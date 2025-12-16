@@ -1,19 +1,14 @@
 <?php
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Proyek extends Model
 {
-    use HasFactory;
-
     protected $table = 'proyek';
-
     protected $primaryKey = 'proyek_id';
-    public $incrementing  = true;
-    protected $keyType    = 'int';
 
     protected $fillable = [
         'kode_proyek',
@@ -23,33 +18,39 @@ class Proyek extends Model
         'anggaran',
         'sumber_dana',
         'deskripsi',
-        'media',
     ];
 
-    public function lokasi()
+    /* ================= MEDIA (TANPA FK) ================= */
+    public function media()
     {
-        return $this->hasMany(LokasiProyek::class, 'proyek_id', 'proyek_id');
+        return $this->hasMany(Media::class, 'ref_id', 'proyek_id')
+            ->where('ref_table', 'proyek')
+            ->orderBy('sort_order');
     }
 
+    /* ================= FILTER ================= */
     public function scopeFilter(Builder $query, $request, array $filterable)
     {
-        foreach ($filterable as $column) {
-            if ($request->filled($column)) {
-                $query->where($column, $request->$column);
+        foreach ($filterable as $field) {
+            if ($request->filled($field)) {
+                $query->where($field, $request->$field);
             }
         }
         return $query;
     }
 
-    public function scopeSearch($query, $request, array $columns)
-    {
-        if ($request->filled('search')) {
-            $query->where(function ($q) use ($request, $columns) {
-                foreach ($columns as $column) {
-                    $q->orWhere($column, 'LIKE', '%' . $request->search . '%');
-                }
-            });
-        }
+    /* ================= SEARCH ================= */
+    public function scopeSearch(Builder $query, $request, array $searchable)
+{
+    if ($request->filled('search')) {
+        $query->where(function ($q) use ($request, $searchable) {
+            foreach ($searchable as $field) {
+                $q->orWhere($field, 'like', '%' . $request->search . '%');
+            }
+        });
     }
+    return $query;
+}
+
 
 }

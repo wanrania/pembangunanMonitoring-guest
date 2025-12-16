@@ -1,76 +1,188 @@
 <?php
+
 namespace App\Http\Controllers;
 
-use App\Models\LokasiProyek;
+use App\Models\Media;
 use App\Models\Proyek;
+use App\Models\LokasiProyek;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class LokasiProyekController extends Controller
 {
+    /* =====================================================
+        ROLE PROTECTION (Staff tidak boleh edit/delete)
+    ===================================================== */
+    private function blockStaff()
+    {
+        if (Auth::check() && Auth::user()->role === 'Staff') {
+            abort(403, 'Staff tidak diperbolehkan mengubah atau menghapus lokasi proyek.');
+        }
+    }
+
+    /* =====================================================
+        INDEX
+    ===================================================== */
     public function index(Request $request)
     {
         $filterable = ['proyek_id'];
         $searchable = ['lat', 'lng', 'geojson'];
 
-        $data['proyek'] = Proyek::all();
+        return view('pages.guest.lokasi.index', [
+            'proyek' => Proyek::orderBy('nama_proyek')->get(),
 
-        $data['lokASI'] = LokasiProyek::with('proyek')
-            ->filter($request, $filterable)
-            ->search($request, $searchable)
-            ->orderBy('lokasi_id', 'DESC')
-            ->paginate(12)
-            ->withQueryString();
-
-        return view('pages.guest.lokasi.index', $data);
+            // DATA LOKASI
+            'lokasi' => LokasiProyek::with('proyek')
+                ->filter($request, $filterable)
+                ->search($request, $searchable)
+                ->orderByDesc('lokasi_id')
+                ->paginate(12)
+                ->withQueryString(),
+        ]);
     }
 
+    /* =====================================================
+        CREATE
+        (Staff boleh create lokasi)
+    ===================================================== */
     public function create()
     {
-        $data['proyek'] = Proyek::all(); // Dropdown untuk memilih proyek
-        return view('pages.guest.lokasi.create', $data);
+        return view('pages.guest.lokasi.create', [
+            'proyek' => Proyek::orderBy('nama_proyek')->get(),
+        ]);
     }
 
+    /* =====================================================
+        STORE
+    ===================================================== */
     public function store(Request $request)
     {
         $request->validate([
             'proyek_id' => 'required|exists:proyek,proyek_id',
             'lat'       => 'required',
             'lng'       => 'required',
-            'geojason'  => 'nullable',
+            'geojson'   => 'nullable',
+            'media.*'   => 'nullable|image|max:2048',
         ]);
 
-        LokasiProyek::create($request->all());
+        $lokasi = LokasiProyek::create([
+            'proyek_id' => $request->proyek_id,
+            'lat'       => $request->lat,
+            'lng'       => $request->lng,
+            'geojson'   => $request->geojson,
+        ]);
 
-        return redirect()->route('lokasi.index')->with('success', 'Lokasi proyek berhasil ditambahkan!');
+        /* ==== MEDIA ==== */
+        if ($request->hasFile('media')) {
+            foreach ($request->file('media') as $i => $file) {
+
+                $path = $file->store('media_lokasi', 'public');
+
+                Media::create([
+                    'ref_table'  => 'lokasi_proyek',
+                    'ref_id'     => $lokasi->lokasi_id,
+                    'file_name'  => $path,
+                    'mime_type'  => $file->getClientMimeType(),
+                    'sort_order' => $i,
+                ]);
+            }
+        }
+
+        return redirect()->route('lokasi.index')
+            ->with('success', 'Lokasi proyek berhasil ditambahkan!');
     }
 
+    /* =====================================================
+        SHOW
+    ===================================================== */
+    public function show($id)
+    {
+        return view('pages.guest.lokasi.show', [
+            'lokasi' => LokasiProyek::with(['media', 'proyek'])->findOrFail($id),
+        ]);
+    }
+
+    /* =====================================================
+        EDIT (Staff DIBLOK)
+    ===================================================== */
     public function edit($id)
     {
-        $data['lokasi'] = LokasiProyek::findOrFail($id);
-        $data['proyek'] = Proyek::all();
-        return view('pages.guest.lokasi.edit', $data);
+        $this->blockStaff();
+
+        return view('pages.guest.lokasi.edit', [
+            'lokasi' => LokasiProyek::with(['media', 'proyek'])->findOrFail($id),
+            'proyek' => Proyek::orderBy('nama_proyek')->get(),
+        ]);
     }
 
-    public function update(Request $request, $lokasi_id)
+    /* =====================================================
+        UPDATE (Staff DIBLOK)
+    ===================================================== */
+    public function update(Request $request, $id)
     {
+        $this->blockStaff();
+
         $request->validate([
             'proyek_id' => 'required|exists:proyek,proyek_id',
             'lat'       => 'required',
             'lng'       => 'required',
-            'geojason'  => 'nullable',
+            'geojson'   => 'nullable',
+            'media.*'   => 'nullable|image|max:2048',
         ]);
 
-        $lokasi = LokasiProyek::findOrFail($lokasi_id);
-        $lokasi->update($request->all());
+        $lokasi = LokasiProyek::findOrFail($id);
 
-        return redirect()->route('lokasi.index')->with('update', 'Lokasi proyek berhasil diperbarui!');
+        $lokasi->update([
+            'proyek_id' => $request->proyek_id,
+            'lat'       => $request->lat,
+            'lng'       => $request->lng,
+            'geojson'   => $request->geojson,
+        ]);
+
+        /* ==== MEDIA BARU ==== */
+        if ($request->hasFile('media')) {
+
+            $lastSort = Media::where('ref_table', 'lokasi_proyek')
+                ->where('ref_id', $lokasi->lokasi_id)
+                ->max('sort_order') ?? 0;
+
+            foreach ($request->file('media') as $i => $file) {
+
+                $path = $file->store('media_lokasi', 'public');
+
+                Media::create([
+                    'ref_table'  => 'lokasi_proyek',
+                    'ref_id'     => $lokasi->lokasi_id,
+                    'file_name'  => $path,
+                    'mime_type'  => $file->getClientMimeType(),
+                    'sort_order' => $lastSort + $i + 1,
+                ]);
+            }
+        }
+
+        return redirect()->route('lokasi.index')
+            ->with('update', 'Lokasi proyek berhasil diperbarui!');
     }
 
+    /* =====================================================
+        DELETE (Staff DIBLOK)
+    ===================================================== */
     public function destroy($id)
     {
-        $lokasi = LokasiProyek::findOrFail($id);
+        $this->blockStaff();
+
+        $lokasi = LokasiProyek::with('media')->findOrFail($id);
+
+        // Hapus file media
+        foreach ($lokasi->media as $m) {
+            Storage::disk('public')->delete($m->file_name);
+            $m->delete();
+        }
+
         $lokasi->delete();
 
-        return redirect()->route('lokasi.index')->with('delete', 'Lokasi proyek berhasil dihapus!');
+        return redirect()->route('lokasi.index')
+            ->with('delete', 'Lokasi proyek berhasil dihapus!');
     }
 }

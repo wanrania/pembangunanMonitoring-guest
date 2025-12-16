@@ -1,73 +1,82 @@
-<footer id="footer" class="footer light-background">
+<div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
+    <div class="container py-5">
+        <div class="row g-5">
 
-        <div class="container footer-top">
-            <div class="row gy-4">
-                <div class="col-lg-5 col-md-12 footer-about">
-                    <a href="index.html" class="logo d-flex align-items-center">
-                        <span class="sitename">Monitoring Proyek</span>
+            <!-- SYSTEM BRANDING -->
+            <div class="col-lg-4 text-center text-lg-start">
+                <div class="mb-3">
+                    <i class="fas fa-building fa-3x text-secondary mb-3"></i>
+                </div>
+                <h4 class="fw-bold text-white">Sistem Pembangunan & Monitoring Proyek</h4>
+                <p class="text-white-50 mt-2">
+                    Sistem digital untuk mempermudah pengawasan, evaluasi,
+                    dan transparansi pembangunan infrastruktur secara real time.
+                </p>
+            </div>
+
+            <!-- CONTACT INFO -->
+            <div class="col-lg-4 text-center">
+                <div class="mb-3">
+                    <i class="fas fa-headset fa-3x text-secondary mb-3"></i>
+                </div>
+                <h4 class="fw-bold text-white">Kontak Kami</h4>
+                <p class="text-white-50 mb-1"><i class="fa fa-envelope me-2"></i> projekta@gmail.com</p>
+                <p class="text-white-50 mb-1"><i class="fa fa-phone me-2"></i> (021) 1224 56458</p>
+                <p class="text-white-50"><i class="fa fa-map-marker-alt me-2"></i> Jl. Umban Sari No. 23, Pekanbaru</p>
+            </div>
+
+            <!-- SOCIAL MEDIA -->
+            <div class="col-lg-4 text-center text-lg-end">
+                <div class="mb-3">
+                    <i class="fas fa-share-alt fa-3x text-secondary mb-3"></i>
+                </div>
+                <h4 class="fw-bold text-white">Ikuti Kami</h4>
+
+                <div class="d-flex justify-content-center justify-content-lg-end mt-3">
+                    <a class="btn btn-secondary btn-lg-square rounded-circle me-2" href="https://facebook.com"
+                        target="_blank">
+                        <i class="fab fa-facebook-f text-white fa-lg"></i>
                     </a>
-                    <p>Sistem Monitoring Proyek ini membantu dalam pencatatan, pelaporan, dan pengawasan kegiatan proyek secara real-time.
-                    Didesain untuk memberikan transparansi dan efisiensi dalam manajemen data.</p>
-                    <div class="social-links d-flex mt-4">
-                        <a href=""><i class="bi bi-twitter-x"></i></a>
-                        <a href=""><i class="bi bi-facebook"></i></a>
-                        <a href=""><i class="bi bi-instagram"></i></a>
-                        <a href=""><i class="bi bi-linkedin"></i></a>
-                    </div>
-                </div>
 
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Useful Links</h4>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Proyek us</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">Terms of service</a></li>
-                        <li><a href="#">Privacy policy</a></li>
-                    </ul>
-                </div>
+                    <a class="btn btn-secondary btn-lg-square rounded-circle me-2" href="https://instagram.com"
+                        target="_blank">
+                        <i class="fab fa-instagram text-white fa-lg"></i>
+                    </a>
 
-                <div class="col-lg-2 col-6 footer-links">
-                    <h4>Our Services</h4>
-                    <ul>
-                        <li><a href="#">Web Design</a></li>
-                        <li><a href="#">Web Development</a></li>
-                        <li><a href="#">Product Management</a></li>
-                        <li><a href="#">Marketing</a></li>
-                        <li><a href="#">Graphic Design</a></li>
-                    </ul>
-                </div>
+                    <a class="btn btn-secondary btn-lg-square rounded-circle me-2" href="https://twitter.com"
+                        target="_blank">
+                        <i class="fab fa-twitter text-white fa-lg"></i>
+                    </a>
 
-                <div class="col-lg-3 col-md-12 footer-contact text-center text-md-start">
-                    <h4>Contact Us</h4>
-                    <p>Marpoyan Damai</p>
-                    <p>Pekanbaru, Riau 28282</p>
-                    <p>Indonesia</p>
-                    <p class="mt-4"><strong>Phone:</strong> <span>+62 822 1234 5678</span></p>
-                    <p><strong>Email:</strong> <span>monitoringproyek@example.com</span></p>
-                </div>
+                    <a class="btn btn-secondary btn-lg-square rounded-circle" href="https://linkedin.com"
+                        target="_blank">
+                        <i class="fab fa-linkedin-in text-white fa-lg"></i>
+                    </a>
 
+                </div>
             </div>
+
         </div>
 
-        <div class="container copyright text-center mt-4">
-            <p>© <span>Copyright</span> <strong class="px-1 sitename">Monitoring Proyek</strong> <span>All Rights Reserved</span>
-            </p>
-            <div class="credits">
-                <!-- All the links in the footer should remain intact. -->
-                <!-- You can delete the links only if you've purchased the pro version. -->
-                <!-- Licensing information: https://bootstrapmade.com/license/ -->
-                <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-                Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a
-                    href=“https://themewagon.com>ThemeWagon
+    </div>
+</div>
+
+<!-- Copyright Start -->
+<div class="container-fluid copyright py-4">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-md-0">
+                <span class="text-body"><a href="#" class="border-bottom text-white"><i
+                            class="fas fa-copyright text-light me-2"></i>Projekta Building and Monitoring</a>, All right
+                    reserved.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end text-body">
+                <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a>
             </div>
         </div>
-
-    </footer>
-
-    <!-- Floating WhatsApp Button -->
-<a href="https://wa.me/6282286667590?text=Halo%20Admin%2C%20saya%20ingin%20bertanya%20tentang%20Monitoring%20Proyek."
-   class="whatsapp-float" target="_blank" title="Hubungi via WhatsApp">
-   <i class="fa-brands fa-whatsapp"></i>
-</a>
-
+    </div>
+</div>
+<!-- Copyright End -->

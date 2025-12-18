@@ -23,7 +23,7 @@
         <div class="col-lg-6 text-lg-end pe-4">
             <div class="d-flex align-items-center justify-content-end">
 
-                <a href="https://linkedin.com/in/wan-rania-salma-faizaty-5958553a0"
+                <a href="https://www.linkedin.com/in/wan-rania-salma-faizaty-81103b395"
                    target="_blank"
                    class="btn btn-secondary btn-square border me-2">
                     <i class="fab fa-linkedin-in text-white"></i>

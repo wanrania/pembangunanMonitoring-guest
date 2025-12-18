@@ -950,7 +950,7 @@
 /*** copyright end ***/
 
 .logo-navbar {
-    height: 200px; /* ubah sesuai besarnya yang kamu mau */
+    height: 100px; /* ubah sesuai besarnya yang kamu mau */
     object-fit: contain;
 }
 
@@ -960,7 +960,7 @@
     justify-content: center !important; /* horizontal tengah */
     padding-top: 5px;
     padding-bottom: 5px;
-    height: 100px !important;            /* bikin navbar lebih tinggi agar logo muat */
+    height: 50px !important;            /* bikin navbar lebih tinggi agar logo muat */
 }
 
 /* Floating WhatsApp */

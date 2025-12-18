@@ -18,9 +18,9 @@ class DatabaseSeeder extends Seeder
             CreateFirstUser::class,
             CreateWargaDummy::class,
             CreateProyekSeeder::class,
-            CreateLokasiProyekSeeder::class, // relasi proyek → lokasi
             TahapanProyekSeeder::class,      // relasi proyek → tahapan
             ProgresProyekSeeder::class,      // relasi proyek & tahapan → progres
+            CreateLokasiProyekSeeder::class, // relasi proyek → lokasi
             KontraktorSeeder::class,         // relasi proyek → kontraktor
         ]);
     }

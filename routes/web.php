@@ -75,3 +75,7 @@ Route::middleware(['auth', 'checkrole:Admin,Staff'])->group(function () {
     Route::resource('kontraktor', KontraktorController::class);
 
 });
+
+Route::get('/developer', function () {
+    return view('pages.guest.developer');
+})->name('developer');

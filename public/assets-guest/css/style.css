@@ -1186,3 +1186,491 @@
 .btn-apple i {
     color: #fff;
 }
+
+/* =====================
+   DEVELOPER IDENTITY
+===================== */
+.developer-avatar {
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    border: 2px solid #0d6efd;
+}
+
+.developer-name {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.developer-social a {
+    color: #6c757d;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.developer-social a:hover {
+    color: #0d6efd;
+    transform: translateY(-1px);
+}
+
+/* Responsive: sembunyikan di mobile */
+@media (max-width: 991px) {
+    .developer-card {
+        display: none;
+    }
+}
+
+/* =====================
+   DEVELOPER PAGE
+===================== */
+.developer-card {
+    border: none;
+    border-radius: 16px;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.developer-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+}
+
+.developer-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #0d6efd, #0a58ca);
+    color: #fff;
+    font-size: 12px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+.developer-avatar {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border: 4px solid #0d6efd;
+    margin-top: 30px;
+}
+
+.developer-desc {
+    font-size: 14px;
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+.developer-social a {
+    color: #6c757d;
+    transition: all 0.25s ease;
+}
+
+.developer-social a:hover {
+    color: #0d6efd;
+    transform: translateY(-3px);
+}
+
+/* NAVBAR ICON ALIGN FIX */
+.navbar .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+/* DROPDOWN POSITION */
+.dropdown-menu {
+    margin-top: 8px;
+}
+
+/* ICON HOVER */
+.navbar .bi {
+    transition: color 0.2s ease;
+}
+
+.navbar .nav-link:hover .bi {
+    color: #0d6efd;
+}
+
+/* ===============================
+   FIX DROPDOWN KE POTONG
+================================ */
+.navbar,
+.navbar .container-fluid {
+    overflow: visible !important;
+}
+
+.navbar .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+/* ===============================
+   AUTH DROPDOWN DESKTOP
+================================ */
+.dropdown-auth .dropdown-menu {
+    min-width: 220px;
+    margin-top: 10px;
+}
+
+/* ===============================
+   AUTH DROPDOWN MOBILE
+================================ */
+@media (max-width: 991px) {
+    .dropdown-auth .dropdown-menu {
+        position: fixed !important;
+        top: 72px;
+        left: 12px;
+        right: 12px;
+        border-radius: 14px;
+        z-index: 1055;
+    }
+
+    .dropdown-auth .dropdown-item {
+        padding: 14px 18px;
+        font-size: 16px;
+    }
+}
+
+/* ===============================
+   DROPDOWN FIX (NAVBAR)
+================================ */
+.navbar,
+.navbar .container-fluid {
+    overflow: visible !important;
+}
+
+.navbar .nav-link {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-auth .dropdown-menu {
+    min-width: 220px;
+    margin-top: 10px;
+}
+
+@media (max-width: 991px) {
+    .dropdown-auth .dropdown-menu {
+        position: fixed !important;
+        top: 72px;
+        left: 12px;
+        right: 12px;
+        border-radius: 14px;
+        z-index: 1055;
+    }
+
+    .dropdown-auth .dropdown-item {
+        padding: 14px 18px;
+        font-size: 16px;
+    }
+}
+
+/* ===============================
+   LOGIN 2 KOLOM – FINAL
+================================ */
+
+/* BACKGROUND */
+.auth-bg {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+}
+
+.auth-bg::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(13,110,253,0.75),
+            rgba(102,16,242,0.75)
+        ),
+        url("/assets-guest/img/login.jpg");
+    background-size: cover;
+    background-position: center;
+    filter: blur(14px);
+    transform: scale(1.1);
+    z-index: 0;
+}
+
+.auth-bg > * {
+    position: relative;
+    z-index: 2;
+}
+
+
+/* WRAPPER UTAMA */
+.auth-wrapper {
+    width: 100%;
+    display: flex;
+    background: rgba(255,255,255,0.92);
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.18);
+}
+
+/* ===============================
+   KIRI – ILLUSTRATION
+================================ */
+.auth-illustration {
+    flex: 1;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    padding: 48px;
+    display: flex;
+    align-items: center;
+}
+
+.illustration-content {
+    max-width: 320px;
+    color: #fff;
+}
+
+/* ===============================
+   KANAN – FORM (DIKECILIN)
+================================ */
+.auth-form {
+    flex: 1;
+    position: relative;
+
+    /* 🔥 KUNCI UTAMA */
+    max-width: 420px;   /* FORM JADI KECIL */
+    margin: auto;
+
+    padding: 28px 32px;
+}
+
+/* BADGE */
+.auth-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #198754, #20c997);
+    color: #fff;
+    font-size: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+}
+
+/* ===============================
+   INPUT
+================================ */
+.auth-input {
+    height: 42px;
+    padding-left: 42px !important;
+    font-size: 14px;
+    border-radius: 12px;
+}
+
+.auth-input:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 4px rgba(13,110,253,0.15);
+}
+
+.input-icon {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    color: #6c757d;
+}
+
+/* PASSWORD TOGGLE */
+.password-toggle {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* ===============================
+   BUTTON
+================================ */
+.btn-auth {
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    border-radius: 14px;
+    padding: 9px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+/* SOCIAL */
+.btn-social {
+    border-radius: 14px;
+    padding: 9px;
+    font-size: 14px;
+}
+
+.btn-google {
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+.btn-apple {
+    background: #000;
+    color: #fff;
+}
+
+/* ===============================
+   DIVIDER
+================================ */
+.divider {
+    text-align: center;
+    margin: 14px 0;
+    color: #6c757d;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background: #dee2e6;
+}
+
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+/* ===============================
+   MOBILE
+================================ */
+@media (max-width: 991px) {
+    .auth-wrapper {
+        flex-direction: column;
+    }
+
+    .auth-illustration {
+        display: none;
+    }
+
+    .auth-form {
+        max-width: 100%;
+        padding: 26px;
+    }
+}
+
+/* ===============================
+   ILLUSTRATION LEFT – PREMIUM
+================================ */
+.auth-illustration {
+    flex: 1;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    padding: 56px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* subtle background glow */
+.auth-illustration::before {
+    content: "";
+    position: absolute;
+    width: 420px;
+    height: 420px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 50%;
+    filter: blur(120px);
+    top: -120px;
+    left: -120px;
+}
+
+/* CONTENT */
+.illustration-content {
+    position: relative;
+    max-width: 360px;
+    color: #fff;
+    z-index: 2;
+}
+
+/* BADGE */
+.illustration-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(6px);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+
+/* LIST */
+.illustration-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.illustration-list i {
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* DECOR ICON */
+.illustration-icon {
+    position: absolute;
+    right: -30px;
+    bottom: -40px;
+    font-size: 160px;
+    opacity: 0.12;
+}
+
+/* ===============================
+   ILLUSTRATION WITH CARD
+================================ */
+.auth-illustration {
+    flex: 1;
+    background: linear-gradient(135deg, #0d6efd, #6610f2);
+    padding: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* CARD DI DALAM ILUSTRASI */
+.illustration-card {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(12px);
+    border-radius: 18px;
+    padding: 32px;
+    max-width: 380px;
+    color: #fff;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+/* BADGE KECIL */
+.illustration-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-bottom: 16px;
+}
+
+/* LIST */
+.illustration-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    opacity: 0.95;
+}
+
+.illustration-list i {
+    font-size: 16px;
+    opacity: 0.9;
+}

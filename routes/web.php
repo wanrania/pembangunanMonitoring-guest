@@ -5,9 +5,11 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DeveloperController;
 use App\Http\Controllers\KontraktorController;
 use App\Http\Controllers\LokasiProyekController;
 use App\Http\Controllers\ProgresProyekController;
@@ -20,7 +22,7 @@ use App\Http\Controllers\TahapanProyekController;
 | Hanya Home & About
 */
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-Route::get('/about', fn () => view('pages.guest.about'))->name('about');
+Route::get('/about', [AboutController::class, 'index'])->name('about');
 
 /*
 |--------------------------------------------------------------------------
@@ -76,6 +78,4 @@ Route::middleware(['auth', 'checkrole:Admin,Staff'])->group(function () {
 
 });
 
-Route::get('/developer', function () {
-    return view('pages.guest.developer');
-})->name('developer');
+Route::get('/developer', [DeveloperController::class, 'index'])->name('developer');

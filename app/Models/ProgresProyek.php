@@ -29,12 +29,11 @@ class ProgresProyek extends Model
 
     /* MEDIA GLOBAL */
     public function media()
-{
-    return $this->hasMany(Media::class, 'ref_id', 'progres_id')
-        ->where('ref_table', 'progres_proyek')
-        ->orderBy('sort_order');
-}
-
+    {
+        return $this->hasMany(Media::class, 'ref_id', 'progres_id')
+            ->where('ref_table', 'progres_proyek')
+            ->orderBy('sort_order');
+    }
 
     public function scopeFilter(Builder $query, $request, array $filterable)
     {

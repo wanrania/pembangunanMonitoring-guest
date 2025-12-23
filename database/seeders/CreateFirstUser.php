@@ -29,7 +29,7 @@ class CreateFirstUser extends Seeder
                 'updated_at' => now(),
             ],
 
-            // ===== KEPALA PROYEK (3 ORANG) =====
+            // ===== USER (3 ORANG) =====
             [
                 'name'       => 'Budi Santoso',
                 'email'      => 'budi@projek.id',

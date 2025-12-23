@@ -30,22 +30,19 @@
 
                 <!-- FACEBOOK -->
                 <a href="https://www.facebook.com/" target="_blank"
-                   class="btn btn-primary btn-square border border-white me-2"
-                   aria-label="Facebook">
+                    class="btn btn-primary btn-square border border-white me-2" aria-label="Facebook">
                     <i class="fab fa-facebook-f"></i>
                 </a>
 
                 <!-- INSTAGRAM -->
                 <a href="https://www.instagram.com/" target="_blank"
-                   class="btn btn-primary btn-square border border-white me-2"
-                   aria-label="Instagram">
+                    class="btn btn-primary btn-square border border-white me-2" aria-label="Instagram">
                     <i class="fab fa-instagram"></i>
                 </a>
 
                 <!-- LINKEDIN -->
                 <a href="https://www.linkedin.com/" target="_blank"
-                   class="btn btn-primary btn-square border border-white"
-                   aria-label="LinkedIn">
+                    class="btn btn-primary btn-square border border-white" aria-label="LinkedIn">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
             </div>
@@ -88,27 +85,6 @@
 
                 <!-- LOGIN ONLY -->
                 @auth
-                    {{-- <div class="nav-item dropdown">
-                        <a href="{{ route('proyek.index') }}"
-                            class="nav-item nav-link {{ request()->routeIs('proyek.*') ? 'active' : '' }}">
-                            Proyek
-                        </a>
-
-                        <a href="{{ route('tahapan.index') }}"
-                            class="nav-item nav-link {{ request()->routeIs('tahapan.*') ? 'active' : '' }}">
-                            Tahapan Proyek
-                        </a>
-
-                        <a href="{{ route('progres.index') }}"
-                            class="nav-item nav-link {{ request()->routeIs('progres.*') ? 'active' : '' }}">
-                            Progres Proyek
-                        </a>
-
-                        <a href="{{ route('lokasi.index') }}"
-                            class="nav-item nav-link {{ request()->routeIs('lokasi.*') ? 'active' : '' }}">
-                            Lokasi Proyek
-                        </a>
-                    </div> --}}
                     <div class="nav-item dropdown d-flex align-items-center">
 
                         <!-- LINK KE INDEX PROYEK -->
@@ -169,20 +145,19 @@
                 @else
                     <!-- HAMBURGER MENU -->
                     <div class="nav-item dropdown">
-    <a href="#" class="btn btn-outline-secondary rounded-circle p-2"
-       data-bs-toggle="dropdown">
-        <i class="bi bi-person fs-4"></i>
-    </a>
+                        <a href="#" class="btn btn-outline-secondary rounded-circle p-2" data-bs-toggle="dropdown">
+                            <i class="bi bi-person fs-4"></i>
+                        </a>
 
-    <div class="dropdown-menu dropdown-menu-end shadow">
-        <a href="{{ route('login') }}" class="dropdown-item">
-            <i class="bi bi-box-arrow-in-right me-2"></i> Login
-        </a>
-        <a href="{{ route('developer') }}" class="dropdown-item">
-            <i class="bi bi-person-badge me-2"></i> Developer
-        </a>
-    </div>
-</div>
+                        <div class="dropdown-menu dropdown-menu-end shadow">
+                            <a href="{{ route('login') }}" class="dropdown-item">
+                                <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                            </a>
+                            <a href="{{ route('developer') }}" class="dropdown-item">
+                                <i class="bi bi-person-badge me-2"></i> Developer
+                            </a>
+                        </div>
+                    </div>
 
                 @endauth
 
